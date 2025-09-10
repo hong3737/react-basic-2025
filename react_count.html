@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- babel이 아래 코드를 JSX코드로 변환해준다. -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- babel 사용 시 type="text/babel" 필수 -->
+<script type="text/babel">
+    // JSX
+    function App() {
+        const [counter, setCounter] = React.useState(0);
+        // 리액트는 바뀌는 숫자 부분만 랜더링됨 -> 바닐라는 div전체가 리랜더링
+        const countUp = () => {
+            // setCounter(counter + 1);
+            setCounter((current) => current + 1);
+        };
+        return (
+            <div>
+                <h3>Total clicks: {counter}</h3>
+                <button onClick={countUp}>Click me</button>
+            </div>
+        );
+    }
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+
+
+    /* babel 미사용 시 orgin react
+    const h3 = React.createElement("h3", {
+        id: "title",
+        style: {
+            color: "tomato"
+        },
+        onMouseEnter: () => console.log("mouse enter"),
+    }, "Hello I'm a h3");
+
+    const btn = React.createElement("button", {
+        onClick: () => console.log("I'm clicked!"),
+    }, "Click me");
+    const container = React.createElement("div", null, [h3, btn]);
+    ReactDOM.render(container, root);
+    */
+</script>
+
+</html>
