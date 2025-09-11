@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- 어떤 타입의 prop를 받고 있는지 체크 해줌 -->
+<script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    // function Btn(props) { props.banana }
+    function Btn({ banana, tomato, onClickProps, fontSize = 14 }) {
+        console.log(banana, "was renderd");
+        return (
+            <button
+                onClick={onClickProps}
+                style={{
+                    backgroundColor: tomato ? "tomato" : "blue",
+                    color: "white",
+                    padding: "10px 20px",
+                    border: 0,
+                    borderRadius: "10px",
+                    fontSize
+                }}>
+                {banana}
+            </button>
+        );
+    }
+    // React.memo: props 변경되지 않아 다시 그릴 필요가 없는 컴포넌트를 기억하고 리랜더링 막음
+    const MemorizedBtn = React.memo(Btn);
+    MemorizedBtn.propTypes = {
+        banana: PropTypes.string.isRequired,
+        fontSize: PropTypes.number,
+    }
+    function App() {
+        const [value, setValue] = React.useState("Save Changes");
+        const changeValue = () => setValue("Revert Changes");
+
+        // Btn 함수의 argument로 object {banana:Save Changes, tomato:true, onClickProps:함수} 전달
+        return (
+            <div className="gradient-box">
+                <MemorizedBtn banana={value} tomato={true} onClickProps={changeValue} />
+                <MemorizedBtn banana="ChangeFont" fontSize={20} />
+                <MemorizedBtn banana="Confirm" />
+            </div>
+        );
+    }
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+</script>
+
+</html>
