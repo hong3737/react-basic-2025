@@ -2,10 +2,11 @@ import PropTypes from "prop-types";
 // a태그 사용 시 브라우저 새로고침
 // Link: 브라우저 새로 고침 없이 페이지 이동
 import { Link } from "react-router-dom";
+import { MovieCard } from "./Movie.styled";
 
 function Movie({ id, coverImg, title, summary, genres }) {
     return (
-        <div>
+        <MovieCard>
             <img src={coverImg} alt={`${title} 이미지`} />
             <h2>
                 <Link to={`/movie/${id}`}>{title}</Link>
@@ -16,7 +17,7 @@ function Movie({ id, coverImg, title, summary, genres }) {
                     <li key={g}>{g}</li>
                 ))}
             </ul>
-        </div>
+        </MovieCard>
     );
 }
 
